@@ -9,7 +9,7 @@ services:
     volumes:
       - "./:/work:cached"
       - "./vendor/bundle:/bundle:cached"
-      - /work/vendor/bundle
+      #- /work/vendor/bundle
       - /work/.git
     depends_on:
       - db

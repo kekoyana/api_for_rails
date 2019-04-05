@@ -1,5 +1,6 @@
 FROM ruby:2.6.2-alpine
 ENV BUNDLE_JOBS=4 \
+    BUNDLE_PATH=./vendor/bundle \
     APP_DIR=/work
 WORKDIR $APP_DIR
 COPY Gemfile $APP_DIR
@@ -11,14 +12,14 @@ RUN apk update && \
 #      gcc \
 #      g++ \
       build-base \
-      curl-dev \
+#      curl-dev \
 #      linux-headers \
       libxml2-dev \
-#      libxslt-dev \
-      postgresql-dev \
+      libxslt-dev && \
+#      postgresql-dev \
 #      ruby-dev \
-      yaml-dev \
-      zlib-dev && \
+#      yaml-dev \
+#      zlib-dev && \
     apk add --update --no-cache \
       bash \
       git \
@@ -29,5 +30,5 @@ RUN apk update && \
       yaml && \
     gem install bundler -v 2.0.1 && bundle install && \
     mkdir -p $APP_DIR
-RUN apk del .build-dependencies
+#RUN apk del .build-dependencies
 COPY . $APP_DIR
