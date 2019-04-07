@@ -24,6 +24,7 @@ end
 group :development do
   gem 'annotate'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'prmd'
   gem 'rubocop', require: false
   gem 'rubocop-performance'
   gem 'spring'
