@@ -13,6 +13,8 @@ gem 'puma', '~> 3.11'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'committee'
+  gem 'committee-rails'
   gem 'factory_bot_rails'
   gem 'pry-byebug'
   gem 'pry-doc'
@@ -32,6 +34,5 @@ group :development do
 end
 
 group :test do
-  gem 'committee-rails'
   gem 'rspec-json_matchers'
 end
