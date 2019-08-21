@@ -1,4 +1,4 @@
-FROM ruby:2.6.2-alpine
+FROM ruby:2.6.3-alpine
 ENV BUNDLE_JOBS=4 \
     APP_DIR=/work
 WORKDIR $APP_DIR
@@ -19,7 +19,7 @@ RUN apk update && \
       postgresql \
       tzdata \
       yaml && \
-    gem install bundler -v 2.0.1 && bundle install --path=vendor/bundle && \
+    gem install bundler -v 2.0.2 && bundle install --path=vendor/bundle && \
     mkdir -p $APP_DIR
 #RUN apk del .build-dependencies
 COPY . $APP_DIR
