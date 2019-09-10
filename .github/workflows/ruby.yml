@@ -23,10 +23,15 @@ jobs:
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
-        bundle exec rake
+    - name: Set up database
+      run: |
+        bundle exec rails db:prepare
+      env:
+        RAILS_ENV: test
+        DB_HOST: localhost
     - name: rubocop
       run: |
-        rubocop
+        bundle exec rubocop
     - name: rspec
       run: |
-        rspec
+        bundle exec rspec
