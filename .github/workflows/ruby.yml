@@ -33,5 +33,7 @@ jobs:
       run: |
         bundle exec rubocop
     - name: rspec
+      env:
+        DB_HOST: localhost
       run: |
         bundle exec rspec
