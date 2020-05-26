@@ -1,27 +1,30 @@
-require: rubocop-performance
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+inherit_mode:
+  merge:
+    - Exclude
 
 AllCops:
   TargetRubyVersion: 2.6
+  NewCops: enable
   Exclude:
     - db/schema.rb
     - db/seeds.rb
     - vendor/bundle/**/*
 
-Style/MixinUsage:
-  Include:
-    - app/**/*.rb
+Style/AsciiComments:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
 
-Rails:
-  Enabled: true
-
-Metrics/LineLength:
-  Max: 120
-
 Metrics/BlockLength:
-  Max: 50
   Exclude:
-    - spec/**/*
+    - config/environments/*.rb
+    - config/routes.rb
+    - db/migrate/*.rb
+    - spec/**/*.rb
 
