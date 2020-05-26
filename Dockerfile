@@ -1,4 +1,4 @@
-FROM ruby:2.6.6-alpine
+FROM ruby:2.7.1-alpine
 ENV BUNDLE_JOBS=4 \
     APP_DIR=/work
 WORKDIR $APP_DIR

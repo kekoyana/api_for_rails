@@ -11,6 +11,8 @@ services:
       - "./vendor/bundle:/bundle:cached"
       #- /work/vendor/bundle
       - /work/.git
+    env:
+      BUNDLE_PATH: /bundle
     depends_on:
       - db
   db:
