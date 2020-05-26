@@ -1,39 +1,62 @@
-name: Ruby
-
+name: Ruby Verify
 on: [push]
 
 jobs:
-  build:
-
+  linters:
+    name: Linters
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Ruby gem cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Install gems
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Run linters
+        run: |
+          bundle exec rubocop --parallel
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: "pass1234"
+        ports:
+        - 5432:5432
 
     steps:
-    - name: install libpq
-      run: |
-        sudo apt-get install libpq-dev
-    - uses: harmon758/postgresql-action@v1
-      with:
-        postgresql version: '11'
-    - uses: actions/checkout@v1
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.6.5
-    - name: Build and test with Rake
-      run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3
-    - name: Set up database
-      run: |
-        bundle exec rails db:prepare
-      env:
-        RAILS_ENV: test
-        DB_HOST: localhost
-    - name: rubocop
-      run: |
-        bundle exec rubocop
-    - name: rspec
-      env:
-        DB_HOST: localhost
-      run: |
-        bundle exec rspec
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Ruby gem cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Install gems
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Setup test and rspec
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:pass1234@localhost:5432/work_test
+        run: |
+          bin/rails db:setup
+          bundle exec rspec
