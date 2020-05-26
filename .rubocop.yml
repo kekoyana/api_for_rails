@@ -15,6 +15,18 @@ AllCops:
     - db/seeds.rb
     - vendor/bundle/**/*
 
+# environmentつけない処理を行うこともあるため
+Rails/RakeEnvironment:
+  Enabled: false
+
+# expectが複数行並ぶケースがあるので、ExampleLengthは考慮しない
+RSpec/ExampleLength:
+  Enabled: false
+
+# aggregate_failures を有効にしたいので複数のexpectを許可する
+RSpec/MultipleExpectations:
+  Enabled: false
+
 Style/AsciiComments:
   Enabled: false
 

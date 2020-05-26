@@ -2,18 +2,18 @@
 
 require 'rails_helper'
 
-describe 'request spec' do
+describe 'UsersController' do
   include Committee::Rails::Test::Methods
 
   def committee_options
-    schema_path = Rails.root.join('docs', 'schema', 'schemata', 'users.yml').to_s
+    schema_path = Rails.root.join('docs/schema/schemata/users.yml').to_s
     @committee_options ||= { schema_path: schema_path }
   end
 
   describe 'GET /users' do
     it 'works! (now write some real specs)' do
       get users_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'conform json schema' do
